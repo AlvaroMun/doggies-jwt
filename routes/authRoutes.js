@@ -2,8 +2,8 @@ const {
     Router
 } = require("express");
 const {
-    singup_get,
-    singup_post,
+    signup_get,
+    signup_post,
     login_get,
     login_post
 } = require("../controllers/authController");
@@ -11,8 +11,8 @@ const {
 const router = Router();
 
 
-router.get('/singup', singup_get);
-router.post('/singup', singup_post);
+router.get('/signup', signup_get);
+router.post('/signup', signup_post);
 router.get('/login', login_get);
 router.post('/login', login_post);
 // router.get('/logout', ()=>{});

@@ -1,5 +1,34 @@
 <%- include('partials/header'); -%>
 
-<h1>singup page</h1>
+<form>
+    <h1>signup page</h1>
+    <label for="email">Email</label>
+    <input name="email" type="text" required />
+    <label for="pasword">Password</label>
+    <input name="password" type="password" required />
+    <button type="submit">Signup</button>
+</form>
+
+<script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = form.email.value;
+        const password = form.password.value;
+
+        fetch("http://localhost:5000/signup", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log("todo mal", err.message));
+    });
+</script>
 
 <%- include('partials/footer'); -%>
