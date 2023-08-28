@@ -20,12 +20,12 @@ const handleErrors = (err) => {
     };
 
     // incorrect email
-    if (err.message === 'incorrect email') {
+    if (err.message === 'Invalid email') {
         errors.email = 'That email is not registered';
     }
 
     // incorrect password
-    if (err.message === 'incorrect password') {
+    if (err.message === 'Invalid password') {
         errors.password = 'That password is incorrect';
     }
 
@@ -90,8 +90,26 @@ const signup_post = async (req, res) => {
 const login_post = async (req, res) => {
     const {
         email,
-        passowrd
+        password
     } = req.body;
+
+    try {
+        const user = await User.login(email, password);
+
+        const token = createToken(user._id);
+        res.cookie("jwt", token, {
+            httpOnly: true,
+            maxAge: MAX_AGE * 1000
+        })
+
+        res.status(200).json({
+            user: user._id
+        });
+    } catch (error) {
+        res.status(400).json({
+            errors: handleErrors(error)
+        })
+    }
 }
 
 module.exports = {

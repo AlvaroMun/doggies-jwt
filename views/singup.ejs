@@ -39,6 +39,9 @@
                     emailError.textContent = data.errors.email;
                     passError.textContent = data.errors.password;
                 }
+                if (data.user) {
+                    location.assign("/");
+                }
             })
             .catch((err) => {
                 console.log("error", err);
