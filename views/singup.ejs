@@ -4,18 +4,25 @@
     <h1>signup page</h1>
     <label for="email">Email</label>
     <input name="email" type="text" required />
-    <label for="pasword">Password</label>
+    <div class="email error"></div>
+    <label for="password">Password</label>
     <input name="password" type="password" required />
+    <div class="password error"></div>
     <button type="submit">Signup</button>
 </form>
 
 <script>
     const form = document.querySelector("form");
+    const emailError = document.querySelector(".email.error");
+    const passError = document.querySelector(".password.error");
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         const email = form.email.value;
         const password = form.password.value;
+
+        emailError.textContent = "";
+        passError.textContent = "";
 
         fetch("http://localhost:5000/signup", {
             method: "POST",
@@ -26,8 +33,16 @@
             body: JSON.stringify({ email, password }),
         })
             .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.log("todo mal", err.message));
+            .then((data) => {
+                console.log(data);
+                if (data.errors) {
+                    emailError.textContent = data.errors.email;
+                    passError.textContent = data.errors.password;
+                }
+            })
+            .catch((err) => {
+                console.log("error", err);
+            });
     });
 </script>
 
