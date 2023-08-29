@@ -12,6 +12,10 @@ a {
     list-style: none;
 }
 
+a:visited {
+    color: black;
+}
+
 input {
     height: 25px;
 }
